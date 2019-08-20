@@ -22,9 +22,8 @@ def Force(s):
     return f
 
 m = []
-for i in range(5):
+for i in range(10):
     m.append(1)
-    m.append(np.sqrt(2))
 m = np.array(m)     
 r = np.arange(0.5, 10, 1)
 rv1 = np.random.random(10) - 0.5
@@ -40,7 +39,7 @@ rt.extend(r)
 vt.extend(v)
 kt.append(Ek_func(v))
 Et.append(1)
-step = 1000000
+step = 100000
 dt = 0.01
 
 for i in range(step):
@@ -49,14 +48,14 @@ for i in range(step):
     v = v + 0.5*dt*(f_old + Force(r))/m
     p.append(np.sum(m*v))
     kt.append(Ek_func(v))
-    Et.append((Ep_func(r)+Ek_func(v)))
+    Et.append((Ep_func(r)))
     rt.extend(r)
     vt.extend(v)
 
 rt = np.array(rt).reshape(step+1,10)
 vt = np.array(vt).reshape(step+1,10)
 t = np.arange(0, (step+0.5)*dt, dt)
-
+# plt.hist(Et, 100, normed=1)
 # plt.plot(t, p, label='p')
 # plt.plot(t, kt, label='Ek')
 # plt.plot(t, Et, label='E')
@@ -84,19 +83,24 @@ def zhengtai(x, mu, sigma):
 
 x = np.arange(-1.2, 1.2, 0.01)
 
-print(np.mean(vt[:,0]),np.std(vt[:,0]))
-plt.hist(vt[:,0], 200, normed=1)
-# plt.plot(x, zhengtai(x, np.mean(vt[:,0]), np.std(vt[:,0])), label='Normal')
-plt.xlabel('v1', font1)
-plt.ylabel('P(v1)', font1)
-plt.legend(prop=font1)
+plt.hist(Et, 100, normed=1)
 plt.show()
 
-plt.hist(vt[:,1], 200, normed=1)
-# plt.plot(x, zhengtai(x, np.mean(vt[:,1]), np.std(vt[:,1])), label='Normal')
-plt.xlabel('v2', font1)
-plt.ylabel('P(v2)', font1)
-plt.legend(prop=font1)
-plt.show()
-print(0.5*np.sum(vt[:,0]**2)/len(vt[:,0]))
-print(0.5*np.sqrt(2)*np.sum(vt[:,1]**2)/len(vt[:,1]))
+# print(np.mean(vt[:,0]),np.std(vt[:,0]))
+# plt.hist(vt[:,0], 200, normed=1)
+# plt.plot(x, zhengtai(x, np.mean(vt[:,0]), np.std(vt[:,0])), label='Normal')
+# plt.xlabel('v1', font1)
+# plt.ylabel('P(v1)', font1)
+# plt.legend(prop=font1)
+# print(np.var(vt[:,0]))
+# print(np.mean(0.5*vt[:,0]**2))
+# plt.show()
+
+# plt.hist(vt[:,1], 200, normed=1)
+# # plt.plot(x, zhengtai(x, np.mean(vt[:,1]), np.std(vt[:,1])), label='Normal')
+# plt.xlabel('v2', font1)
+# plt.ylabel('P(v2)', font1)
+# plt.legend(prop=font1)
+# plt.show()
+# print(0.5*np.sum(vt[:,0]**2)/len(vt[:,0]))
+# print(0.5*np.sqrt(2)*np.sum(vt[:,1]**2)/len(vt[:,1]))
